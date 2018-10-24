@@ -49,11 +49,13 @@
  
  /* custom */
  a {
-   color: #7e8c8d;
+   color: #eee;
    text-decoration: none;
    -webkit-backface-visibility: hidden;
  }
- 
+ img{
+   display: block;
+ }
  li {
    list-style: none;
  }

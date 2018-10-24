@@ -2,31 +2,31 @@
   <div class="footer_guide">
     <div class="guide_item" @click="goto('/home')" :class="{on:$route.path==='/home'}"> 
       <span class="item_icon">
-        <i class="iconfont icon-home"></i>
+        <i class="iconfont icon-shouye2"></i>
       </span>
       <span>首页</span>
     </div>
     <div class="guide_item" @click="goto('/topic')" :class="{on:$route.path==='/topic'}"> 
       <span class="item_icon">
-        <i class="iconfont icon-shiwu"></i>
+        <i class="iconfont icon-fangkuai"></i>
       </span>
       <span>识物</span>
     </div>  
     <div class="guide_item" @click="goto('/item')" :class="{on:$route.path==='/item'}"> 
       <span class="item_icon">
-        <i class="iconfont icon-navicon-kcfl"></i>
+        <i class="iconfont icon-fenlei"></i>
       </span>
       <span>分类</span>
     </div> 
     <div class="guide_item" @click="goto('/cart')" :class="{on:$route.path==='/cart'}"> 
       <span class="item_icon">
-        <i class="iconfont icon-gouwuche2"></i>
+        <i class="iconfont icon-gouwuchekong"></i>
       </span>
       <span>购物车</span>
     </div> 
     <div class="guide_item" @click="goto('/login')"> 
       <span class="item_icon">
-        <i class="iconfont icon-mine"></i>
+        <i class="iconfont icon-icon-"></i>
       </span>
       <span>个人</span>
     </div> 

@@ -123,8 +123,4 @@
             font-size (26/$rem)
             text-align center
             color #333333        
-        // li
-        //   float left
-        //   height 20px
-        //   padding 4px
 </style>

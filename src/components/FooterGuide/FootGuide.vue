@@ -55,6 +55,7 @@ export default {
     height (98/$rem)
     background-color #ffffff
     display flex
+    z-index 100
     .guide_item
       display flex
       flex-direction column
@@ -63,7 +64,7 @@ export default {
       align-items center
       color #666666
       margin (5/$rem)
-      z-index 100
+      
       &.on
         color #b4282d
       span

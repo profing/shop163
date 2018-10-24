@@ -24,10 +24,8 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import '../../assets/stylus/minxin'
   .m-ftWrap
-    top-border-1px(#e4e4e4)
-    position fixed
-    bottom (98/$rem)
-    left 0
+    overflow hidden
+    margin-bottom (98/$rem)
     width 100%
     height (245/$rem)
     background-color #414141  

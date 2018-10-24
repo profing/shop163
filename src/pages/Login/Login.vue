@@ -9,7 +9,7 @@
         <div class="right">
           <div class="search">
             <a href="javascript:;">
-              <img src="../../assets/images/search.png"></img>
+              <img src="//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png"></img>
             </a>
           </div>
           <div class="cart">

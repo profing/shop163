@@ -9,116 +9,72 @@
           </div>
         </div>
       </header>
+      <!-- 左侧导航列表 -->
       <section class="main">
         <div class="listMenu">
-          <div class="inner">
+          <div class="list_nav">
             <ul>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
-              </li>
-              <li class="item">
-                <a href="javascript:;">推荐专区</a>
+              <li class="item" :class="{active:isActive === index}" v-if="navData.length"
+                v-for="(category,index) in navData"
+               :key="index"
+               @click = 'switchCategory(index,category)'>
+                <a href="javascript:;">{{category.name}}</a>
               </li>
             </ul>
           </div>
         </div>
-
       </section>
+      <!-- 右侧内容区 -->
       <section class="list_Right">
+        <!-- 头部 -->
         <div class="header_img">
           <a href="javascript:;"></a>
         </div>
-        <ul class="list_Right_list">
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-          <li>
-            <img src="http://yanxuan.nosdn.127.net/c3a2ae5f17b277bfc296f175aa474dca.png?imageView&quality=85&thumbnail=144x144" alt="">
-            <p>服装每满199减20</p>
-          </li>
-        </ul>
+        <!-- 内容列表-->
+        <div class="cateList" v-if="navData.length">
+          <SpecialItem v-if="!showcategory.level" :showcategory = 'showcategory'/>
+          <CategoryItem v-else :showcategory = 'showcategory'/>
+        </div>
       </section>
     </section>
   </div>
 </template>
 
 <script>
-export default {};
+  import {mapState} from 'vuex'
+  import BScroll from 'better-scroll'
+  import CategoryItem from '../../components/CategoryItem/CategoryItem.vue'
+  import SpecialItem from '../../components/SpecialItem/SpecialItem.vue'
+export default {
+    data() {
+      return {
+        isActive:0,
+        showcategory:{}
+      }
+    },
+    computed:{
+      ...mapState(['navData'])
+    },  
+    methods:{
+      switchCategory(index,category){
+        this.isActive = index;
+        this.showcategory = category;
+      },
+    },
+    mounted(){
+      this.$store.dispatch('getNavData',()=>{
+        this.$nextTick(()=>{
+          
+          new BScroll('.list_nav',{click: true,scrollY:true,probeType: 1});
+          this.showcategory = this.navData[0]
+        })
+      })
+    },
+    components:{
+      CategoryItem,
+      SpecialItem 
+    }
+};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
@@ -127,6 +83,7 @@ export default {};
     margin-bottom (98/$rem)
     height 100%
     background #ffffff
+    width 100%
     overflow hidden
     .search
       position fixed
@@ -193,7 +150,7 @@ export default {};
           -webkit-transform-origin 100% 50% 0
           transform-origin 100% 50% 0
           right 0
-      .inner
+      .list_nav
         width 100%
         max-height (1140/$rem)
         padding-top (40/$rem)
@@ -249,24 +206,7 @@ export default {};
         background-size cover
         border-radius (4/$rem)
         margin-bottom (32/$rem)
-      .list_Right_list
-        width (588/$rem)
-        height (824/$rem)
-        box-sizing border-box
-        li
-          width (144/$rem)
-          height (216/$rem)
-          float left
-          padding-right (34/$rem)
-          img
-            width (144/$rem)
-            height (144/$rem)
-          p 
-            font-size (30/$rem)
-            width (144/$rem)
-            height (72/$rem)
-            color #333333
-            text-align center
+
 
 </style>
 

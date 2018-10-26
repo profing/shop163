@@ -91,7 +91,6 @@
   import HomeIndex from '../../components/HomeIndex/HomeIndex'
   import HomeNav from '../../components/HomeNav/HomeNav'
   import BScorll from 'better-scroll'
-  import 'swiper/dist/css/swiper.css'
   export default {
 
     components:{

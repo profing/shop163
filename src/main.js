@@ -5,6 +5,7 @@ import App from './App'
 import router from './router/index'
 import store from './store'
 import './mock/mockServer'
+import './filters'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

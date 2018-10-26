@@ -1,124 +1,371 @@
 <template>
   <div class="login">
+    <!-- 头部 -->
     <PublicHeader/>
+    <div class="loginContiner">
+      <!-- 登录主界面 -->
+      <!-- <LoginMain :isShow ="!showPage"/> -->
+      <div class="loginTypesWrap" v-show="!showPage">
+        <div class="typesWarp">
+          <div class="logoWarp">
+            <img src="//yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png">
+          </div>
+          <div class="btnWarp">
+            <div class="loginPhone-button redBtn" @click="switchPage('phone')">
+              <i class="icon-loginPhone"></i>
+              <span>手机号码登录</span>
+            </div>
+            <div class="loginMail-button writeBtn" @click="switchPage('mail')">
+              <i class="icon-loginMail" data-reactid=".0.1.0.1.1.1.0"></i>
+              <span>邮箱帐号登录</span>
+            </div>
+            <div class="register-button" @click="switchPage('mail')">
+              <span>手机号快捷注册</span>
+              <i class="icon-arrow-right"></i>
+            </div>
+          </div>
+          <div class="partnerWarp">
+            <div class="itemWarp">
+              <span class="item">
+                <i class="iconfont icon-weixin"></i>
+                <span class="name">微信</span>
+              </span>
+            </div>
+            <div class="itemWarp middleWarp">
+              <span class="item">
+                <i class="iconfont icon-qq"></i>
+                <span class="name">QQ</span>
+              </span>
+            </div>
+            <div class="itemWarp">
+              <span class="item">
+                <i class="iconfont icon-weibo"></i>
+                <span class="name">微博</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 分类型登录界面 -->
+      <div class="loginTypes" v-show="showPage">
+        <div class="phoneLogin fromContiner" v-show="showPage === 'phone'">
+          <div class="logo">
+            <img src="//yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png">
+          </div>
+          <div class="userForm">
+            <div class="inputWarp">
+              <input type="text" class="phone" placeholder="请输入手机号" maxlength="11" v-model="phone">
+            </div>
+            <div class="inputWarp">
+              <input type="password" class="passwrod" placeholder="请输入密码" maxlength="8" minlength="12" v-model="passwrod" v-if="!ifSendSMS" >
+              <input type="password" class="passwrod" placeholder="请输入短信验证码" v-model="smsNumber" v-else maxlength="6">
+              <a class="sendCode" v-show="ifSendSMS">获取验证码</a>
+            </div>
+            <div class="switchTypes smallWrod">
+              <span class="forgetPassword small">
+                忘记密码？
+              </span>
+              <span class="useSMS" @click="ifSendSMS = !ifSendSMS">
+                使用{{ifSendSMS?'密码':'短信'}}验证登录
+              </span>
+            </div>
+            <div class="loginBtnWarp">
+              <div class="login-button redBtn" :class="{right:isInputRight}">
+                <span>登录</span>
+              </div>
+              <div class="login-otherTypes writeBtn" @click="switchPage('')">
+                <span>其他登录方式</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mailLogin fromContiner" v-show="showPage === 'mail'">
+          <div class="logo">
+            <img src="//yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png">
+          </div>
+          <div class="userForm">
+            <div class="inputWarp">
+              <input type="text" class="mail" placeholder="邮箱账号" v-model="mail">
+            </div>
+            <div class="inputWarp">
+              <input type="password" class="passwrod" placeholder="密码" v-model="passwrod" v-if="!ifSendSMS" >
+            </div>
+            <div class="register smallWrod">
+              <span class="register small">
+                注册账号
+              </span>
+              <span class="forgetPassword small">
+                忘记密码
+              </span>
+            </div>
+            <div class="loginBtnWarp">
+              <div class="login-button redBtn" :class="{right:isInputRight}">
+                <span>登录</span>
+              </div>
+              <div class="login-otherTypes writeBtn" @click="switchPage('')">
+                <span>其他登录方式</span>
+              </div>
+            </div>
 
-    <section class="cont">
-      <div class="logo">
-        <img src="../../assets/images/logo.png" alt="logo">
-      </div>
-      <div class="btns">
-        <div class="btn">
-          <i class="iconfont icon-shouji"></i>
-          <span>手机号码登录</span>
-        </div>
-        <div class="btn dist">
-          <i class="iconfont icon-youxiang"></i>
-          <span>邮箱账号登录</span>
+
+          </div>
         </div>
       </div>
-      <div class="quickLoign">
-        <span>手机号快捷注册</span>
-        <i class="iconfont icon-jiantouyou"></i>
-      </div>
-    </section>
-    <section class="otherLogin">
-      <div class="itemOther">
-        <i class="iconfont icon-weixin"></i>
-        <span>微信</span>
-      </div>
-      <div class="itemOther">
-        <i class="iconfont icon-QQ"></i>
-        <span>QQ</span>
-      </div>
-      <div class="itemOther">
-        <i class="iconfont icon-weibo"></i>
-        <span>微博</span>
-      </div>
-    </section>
+    </div>
   </div>
+
 </template>
 
 <script>
-import PublicHeader from '../../components/PublicHeader/PublicHeader'
-export default {
-  components:{
-    PublicHeader
+  import PublicHeader from '../../components/PublicHeader/PublicHeader'
+  // import LoginMain from '../../components/LoginMain/LoginMain'
+  export default {
+    data() {
+      return {
+        phone:'',
+        mail:'',
+        passwrod:'',
+        smsNumber:'',
+        ifSendSMS:false,
+        showPage:false
+      }
+    },
+    computed:{
+      isInputRight(){
+        return false
+      }
+    },
+    components:{
+      PublicHeader,
+      // LoginMain
+    },
+    methods:{
+      switchPage(page){
+        this.showPage = page
+      }
+    }
   }
-}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import '../../assets/stylus/minxin'
-  .login
+@import '../../assets/stylus/minxin'
+.login
+  height 100%
+  width 100%
+  overflow hidden
+  .redBtn
+    text-align: center;
+    font-size: .37333rem;
+    border (1/$rem) solid #b4282d;
+    background-color: #b4282d;
+    overflow: hidden
+    height: 1.25333rem;
+    line-height: 1.25333rem
+    width: 100%
+    border-radius: 2px
+    margin-bottom: .42667rem
+  .writeBtn
+    vertical-align: middle;
+    text-align: center;
+    font-size: .37333rem;
+    border (1/$rem) solid #b4282d
+    overflow: hidden
+    color: #b4282d;
+    background-color: transparent
+    height: 1.25333rem;
+    line-height: 1.25333rem
+    display: block;
+    width: 100%
+    border-radius: 2px
+    margin-bottom: .42667rem
+  .loginContiner
     width 100%
     height 100%
-    box-sizing border-box
-    padding-top (88/$rem)
-    background #f2f5f4
-    position relative
-    .cont
-      >.logo
-        text-align center
-        padding (120/$rem) 0
-        >img
-          display inline-block
-          width (300/$rem)
-          height (104/$rem)
-      >.btns
-        padding 0 (42/$rem)
-        >.btn
-          margin-bottom (40/$rem)
-          text-align center
-          border-radius (6/$rem)
-          width 100%
-          height (86/$rem)
-          line-height (86/$rem)
-          vertical-align middle
-          text-align center
-          font-size (28/$rem)
-          color #b4282d
-          border 1px solid #b4282d
-          // background-color #b4282d
-          &.dist
-            background-color #b4282d
-            color #fff
-          .iconfont
-            
-            width (40/$rem)
-            height (40/$rem)
-            box-sizing border-box
-            font-size (40/$rem)
-            vertical-align inherit
-            margin-right (6/$rem)
-      >.quickLoign
-        color #333333
-        font-size (28/$rem)
-        width 100%
-        text-align center
-        >i 
-          font-size (28/$rem)
-          margin-right (16/$rem)
-          margin-left (4/$rem)
-          color #333333
-    .otherLogin
-      position absolute
+    margin-top 1.16rem
+    background-color #fff
+    >.loginTypesWrap
+      position: relative;
+      height: 100%;
+      background: #F2F5F4
+      >.typesWarp
+        >.logoWarp
+          text-align: center;
+          padding-top: 2.13333rem;
+          padding-bottom: 2.13333rem
+          >img
+            display inline-block 
+            width: 3.57333rem;
+            height: 1.2rem
+        >.btnWarp
+          padding: 0 .53333rem;
+          margin-bottom: 2.73333rem
+          >.loginPhone-button
+            color: #fff;
+            >.icon-loginPhone
+              display: inline-block;
+              vertical-align: middle;
+              background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/sprites/login-s2d0d826858-b284a621da.png);
+              background-repeat: no-repeat;
+              background-size: .53333rem 3.86667rem;
+              background-position: 0 -.66667rem
+              width: .53333rem;
+              height: .53333rem
+              margin-right: .21333rem;
+              position: relative;
+              top: -.02667rem
+          >.loginMail-button
+            >.icon-loginMail
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: .21333rem;
+              position: relative;
+              top: -.02667rem
+              background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/sprites/login-s2d0d826858-b284a621da.png);
+              background-repeat: no-repeat;
+              background-size: .53333rem 3.86667rem;
+              width: .53333rem;
+              height: .53333rem
+              background-position: 0 0;
+          >.register-button
+            color: #333;
+            font-size: .37333rem;
+            text-align: center;
+            width: 100%
+            >.icon-arrow-right
+              display: inline-block;
+              vertical-align: middle;
+              background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/arrow-right3-c1ab37e88b.png);
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              width: .37333rem;
+              height: .37333rem
+              margin-right: .21333rem;
+              position: relative;
+              top: -.02667rem
+              margin-left: .05333rem;
+
+        >.partnerWarp
+          position: absolute;
+          width: 100%;
+          left: 0;
+          bottom: 2.16667rem;
+          height: .53333rem;
+          display flex
+          align-items center
+          justify-content center
+          >.itemWarp
+            height: .53333rem;
+            text-align: center;
+            padding: 0 .53333rem
+            flex 1
+            &.middleWarp
+              border-right (1/$rem) solid #979797;
+              border-left (1/$rem) solid #979797;
+            >.item
+              height: .53333rem;
+              position: relative;
+              top: -.13333rem
+              display: flex;
+              align-items center
+              justify-content center
+              line-height: .53333rem;
+              font-size: .37333rem;
+              >.name
+                position: relative;
+                top: .13333rem;
+                height: .53333rem;
+                color: #7F7F7F;
+                margin-left: .06667rem
+                display inline-block
+              >.iconfont
+                position: relative;
+                top: .13333rem;
+                width: .53333rem;
+                height: .53333rem;
+                font-size: .37333rem;
+    >.loginTypes
       width 100%
-      height (60/$rem)
-      left 0
-      bottom (60/$rem)
-      text-align center
-      .itemOther
-        height (26/$rem)
-        border-right 1px solid #979797
-        display inline-block
-        text-align center
-        color #979797
-        padding 0 (60/$rem)
-        font-size (30/$rem)
-        >i 
-          font-size (30/$rem)
-        &:last-child
-          border-right none
+      height auto
+      overflow hidden
+      >.fromContiner
+        >.logo
+          text-align: center;
+          margin-top: .74667rem;
+          margin-bottom: 0
+          >img
+            display inline-block 
+            width: 2.56rem;
+            height: .85333rem
+        >.userForm
+          width: 100%
+          margin-top: .53333rem
+          padding: 1.6rem 0.2rem 0
+          .inputWarp
+            position relative
+            padding .25rem 0
+            &::after
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right 0
+              margin 0 auto
+              width: 90%;
+              height: 1px;
+              background: #d9d9d9;
+            input
+              margin 0 auto
+              padding 0 .1rem
+              position relative
+              width: 8.27rem;
+              height: 0.8rem;
+              font-size: 0.4rem;
+              line-height: 0.8rem;
+              letter-spacing: normal
+              display block
+            .sendCode
+              position absolute
+              right (40/$rem)
+              top 50%
+              transform translateY(-50%)
+              width: 2.3rem;
+              height: 0.75rem;
+              text-align: center;
+              color: #333;
+              font-size (29/$rem)
+              background: #fff;
+              line-height: 0.75rem;
+              border (1/$rem) solid #7F7F7F
+              border-radius (4/$rem)
+
+
+          .smallWrod
+            display flex
+            align-items center
+            justify-content space-between
+            padding 0 .6rem
+            margin-top 0.3rem
+            .small
+              height: 0.6rem;
+              text-decoration: none;
+              cursor: pointer;
+              color: #7f7f7f !important;
+              font-size: 0.4rem;
+              line-height: 0.6rem
+            .useSMS
+              color: #333;
+              font-size: 0.4rem;
+              height: 0.6rem;
+              padding: 0;
+              line-height: 0.6rem
+          .loginBtnWarp
+            padding: 0 .53333rem;
+            margin-top: .73333rem
+            margin-bottom: 2.73333rem
+            >.login-button
+              color: #cb7a7a;
+              &.right
+                color: #fff;
+
+
 </style>
-
-

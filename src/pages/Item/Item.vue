@@ -176,13 +176,13 @@ export default {
                 top 0
                 left 0
                 bottom 0
-                width: 6px
-                background-color $on
+                width (6/$rem)
+                background-color #ab2b2b
               >a
                 font-size (36/$rem)
                 line-height (76/$rem)
                 font-weight 700
-                color $on
+                color #ab2b2b
             +.item
               margin-top (20/$rem)
             >a

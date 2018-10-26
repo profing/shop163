@@ -125,7 +125,7 @@ export default {
       isAtBottom:false,//是否到达底部
       showSurprise: 4,//每次显示个数
       isOverLoad:false,
-      isShowGotoTop:0
+      isShowGotoTop:false
     }
   },
   computed:{
@@ -174,11 +174,11 @@ export default {
       }); 
       // 
       this.TopicScoll.on('scroll',({y}) =>{
-        this.isShowGotoTop = Math.abs(y) >500 ? 1 : 0;
+        this.isShowGotoTop = Math.abs(y) >500 ? true : false;
         y < this.TopicScoll.maxScrollY ? this.isAtBottom = true : this.isAtBottom = false
       });
       this.TopicScoll.on('scrollEnd',({y}) =>{
-        this.isShowGotoTop = Math.abs(y) >500 ? 1 : 0;
+        this.isShowGotoTop = Math.abs(y) >500 ? true : false;
         y < this.TopicScoll.maxScrollY ? this.isAtBottom = true : this.isAtBottom = false
       });
     }
@@ -321,7 +321,7 @@ export default {
                         background-color: #7f7f7f
                       span
                         margin: 0 .10667rem;
-                        font-size: .32rem;
+                        font-size: .30rem;
                         color: #7f7f7f
 
                     >.title
@@ -441,9 +441,11 @@ export default {
               color: #7f7f7f
         .moreSurprises
           margin: 0 .4rem .4rem
+          
           .lineTitle
             height: 1.86667rem;
             display: flex;
+            background #e3e3e2
             align-items: center;
             justify-content center
             &::before,&::after
@@ -453,8 +455,9 @@ export default {
               height: 1px;
               background-color: #d9d9d9
             >div
+              background #fff
               margin: 0 .32rem;
-              font-size: .37333rem;
+              font-size: .30333rem;
               color: #333   
 
       .gotoTop

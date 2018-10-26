@@ -53,6 +53,7 @@
   .home_nav
     width 100%
     height (442/$rem)
+    margin-top (148/$rem)
     .swiper-container
       width 100%
       height (370/$rem)

@@ -26,18 +26,9 @@
           // 初始化列表显示之后执行
           new Swiper('.swiper-container', {
             loop: true, // 循环模式
-            // centeredSlides: true,
-            // slidesPerView: 'auto',
-            // spaceBetween: -15,
-       
-
-            // autoplay: {
-            //   autoplay:true,
-            //   delay: 3000
-            // },
-            // pagination: {// 如果需要分页器
-            //   el: '.swiper-pagination',
-            // },
+            centeredSlides: true,
+            slidesPerView: '1.24',
+            spaceBetween:30,
           })
         })
       }
@@ -56,7 +47,8 @@
       width: 100%
       height (385/$rem)
       padding (24/$rem) 0
-      margin 0 (28/$rem)
+      margin 0 (2/$rem)
+      transform translateX(3px)
       .swiper-slide
         width 100%
         height 100%
